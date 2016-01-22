@@ -10,10 +10,10 @@ $uid_get = $c->get_uid();
 $uid = $uid_get['uid'];
 $user_message = $c->show_user_by_id( $uid);//根据ID获取用户等基本信息
 
-$de = $c->home_timeline(1,50,0,10000,0,0);
+$de = $c->public_timeline(1,2,0);
 var_dump($de);
 $count = count($de['statuses']);
-echo $count;
+//echo $count;
 echo  $de['statuses'][0]['text'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -24,8 +24,8 @@ echo  $de['statuses'][0]['text'];
 </head>
 
 <body>
-	<?=$user_message['screen_name']?>,您好！ 
-	<h2 align="left">发送新微博</h2>
+	<!--<?=$user_message['screen_name']?>,您好！ 
+	--><h2 align="left">发送新微博</h2>
 	<form action="" >
 		<input type="text" name="text" style="width:300px" />
 		<input type="submit" />
