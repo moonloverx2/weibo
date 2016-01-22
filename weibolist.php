@@ -9,7 +9,7 @@ $ms  = $c->home_timeline(); // done
 $uid_get = $c->get_uid();
 $uid = $uid_get['uid'];
 $user_message = $c->show_user_by_id( $uid);//根据ID获取用户等基本信息
-
+//http://api.weibo.com/2/statuses/home_timeline.json?source=4114245531&count=2
 $de = $c->home_timeline(1,50,0,10000,0,0);
 var_dump($de);
 $count = count($de['statuses']);
