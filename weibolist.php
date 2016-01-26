@@ -5,12 +5,13 @@ include_once( 'config.php' );
 include_once( 'saetv2.ex.class.php' );
 
 $c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['token']['access_token'] );
-$ms  = $c->public_timeline(1,2,0); // done
-$ms = $c->home_timeline(1,50,3934930126386700,3934930126386749,0,0 );
+//$ms  = $c->public_timeline(1,2,0); // done
+//$ms = $c->friends_timeline(1,5,3934930126386700,3935561884971417,0,0 );
+$ms = $c->home_timeline(1,200,0,0,0,0 );
 $uid_get = $c->get_uid();
 $uid = $uid_get['uid'];
 $user_message = $c->show_user_by_id( $uid);//根据ID获取用户等基本信息
-var_dump($ms);
+//var_dump($ms);
 
 
 //http://api.weibo.com/2/statuses/home_timeline.json?source=4114245531&count=2
@@ -18,7 +19,22 @@ var_dump($ms);
 //var_dump($de);
 //$count = count($de['statuses']);
 //echo $count;
-//echo  $de['statuses'][0]['text'];
+for($i=0;$i<count($ms['statuses']);$i++)
+{
+	if(!empty($ms['statuses'][$i]['retweeted_status']))
+	{
+		if($ms['statuses'][$i]['retweeted_status']['reposts_count']>50||$ms['statuses'][$i]['retweeted_status']['comments_count']>50);		
+		{
+			echo "別人转发内容:".$ms['statuses'][$i]['retweeted_status']['text']."<br\><br\><br\><br\>";			
+		}
+		continue;
+	}
+	if($ms['statuses'][$i]['comments_count']>50||$ms['statuses'][$i]['reposts_count']>50)
+	{
+        echo "自己发布内容:".$ms['statuses'][$i]['text']."<br\><br\><br\><br\>\n\n\n\n";
+        //$c->update($ms['statuses'][$i]['text']);
+	}
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
