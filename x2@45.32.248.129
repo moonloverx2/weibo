@@ -1,4 +1,3 @@
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <?php
 
 // ignore_user_abort();//关闭浏览器仍然执行
@@ -7,7 +6,9 @@
 // include_once( 'saetv2.ex.class.php' );
 // $c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['token']['access_token'] );
 // $ms  = $c->public_timeline(1,2,0); // done
-echo str_replace("http","(via ".$ms['statuses'][$i]['name'].") http",$ms['statuses'][$i]['text'])
+file_put_contents("log.log",date('Y-m-d h:i:s').PHP_EOL);
+$m = file_get_contents("log.log");
+echo $m;
 // var_dump($ms);
 //do{
 //    $ret = $c->update( $_REQUEST['text'] );	//发送微博
