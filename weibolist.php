@@ -14,39 +14,39 @@ include_once( 'saetv2.ex.class.php' );
 	echo $id;
 	for($i=0;$i<count($ms['statuses']);$i++)
 	{
-		var_dump($ms);
 		if(!empty($ms['statuses'][$i]['retweeted_status']))
 		{
 			if($ms['statuses'][$i]['retweeted_status']['reposts_count']>50||$ms['statuses'][$i]['retweeted_status']['comments_count']>50);
 			{
-// 				if($ms['statuses'][$i]['retweeted_status']['id']>$id)
-// 				{
-				   //echo "別人转发内容:".$ms['statuses'][$i]['retweeted_status']['text']."<br\><br\><br\><br\>";
-				   //file_put_contents("id.log",$ms['statuses'][$i]['retweeted_status']['id']);
-				   //$c->update(str_replace("http","(via ".$ms['statuses'][$i]['retweeted_status']['name'].") http",$ms['statuses'][$i]['retweeted_status']['text']));
-				    //var_dump($ms['statuses'][$i]['retweeted_status']['user']['name']);
-               // var_dump($ms['statuses'][$i]['retweeted_status']['text']);
-				   //echo str_replace("http","(via ".$ms['statuses'][$i]['retweeted_status']['user']['name'].") http",$ms['statuses'][$i]['retweeted_status']['text']);
-// 				}
+ 				if($ms['statuses'][$i]['retweeted_status']['id']>$id)
+ 				{
+			       if(strpos($ms['statuses'][$i]['retweeted_status']['text'],"http") > 0){
+                    $c->update(str_replace("http","(via ".$ms['statuses'][$i]['retweeted_status']['user']['name'].") http",$ms['statuses'][$i]['retweeted_status']['text']));
+                   }   
+				   else
+				   {
+					 $c->update($ms['statuses'][$i]['retweeted_status']['text']."(via ".$ms['statuses'][$i]['retweeted_status']['user']['name'].")");
+				   }
+ 				}
 			}
 			continue;
 		}
 		if($ms['statuses'][$i]['comments_count']>50||$ms['statuses'][$i]['reposts_count']>50)
 		{
-// 			if($ms['statuses'][$i]['id']>$id)
-// 			{
-			  //echo "自己发布内容:".$ms['statuses'][$i]['text']."<br\><br\><br\><br\>\n\n\n\n";
-			  //file_put_contents("id.log",$ms['statuses'][$i]['id']);
-			  //echo str_replace("http","(via ".$ms['statuses'][$i]['user']['name'].") http",$ms['statuses'][$i]['text']);
-			  //$c->update(str_replace("http","(via ".$ms['statuses'][$i]['name'].") http",$ms['statuses'][$i]['text']));
-// 			}
+ 			if($ms['statuses'][$i]['id']>$id)
+ 			{
+             	if(strpos($ms['statuses'][$i]['text'],"http") > 0){
+                  $c->update(str_replace("http","(via ".$ms['statuses'][$i]['user']['name'].") http",$ms['statuses'][$i]['text']));
+                 }   
+				 else
+				 {
+					$c->update($ms['statuses'][$i]['text']."(via ".$ms['statuses'][$i]['user']['name'].")");
+				 }
+ 			}
 		}
 	}
-//  	sleep(3600);//等待时间，进行下一次操作。
+//      sleep(3600);//等待时间，进行下一次操作。
 //  }while(true);
-
-// file_put_contents("id.log",date('Y-m-d h:i:s'));
-// $m = file_get_contents("id.log");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
