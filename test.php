@@ -1,13 +1,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <?php
+session_start();
 
-// ignore_user_abort();//关闭浏览器仍然执行
-// set_time_limit(10);
-// include_once( 'config.php' );
-// include_once( 'saetv2.ex.class.php' );
-// $c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['token']['access_token'] );
-// $ms  = $c->public_timeline(1,2,0); // done
-echo str_replace("http","(via ".$ms['statuses'][$i]['name'].") http",$ms['statuses'][$i]['text'])
+ include_once( 'config.php' );
+ include_once( 'saetv2.ex.class.php' );
+ $c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['token']['access_token'] );
+ $ms  = $c->public_timeline(1,2,0); // done
+//var_dump($c->upload("测试","http://ww1.sinaimg.cn/thumbnail/b25712cbjw1f0e58n3o6ej20cc09e3ys.jpg",0,0));
+var_dump($c->upload_url_text("测试","http://ww1.sinaimg.cn/thumbnail/b25712cbjw1f0e58n3o6ej20cc09e3ys.jpg",0,0,0,0,0,0));
 // var_dump($ms);
 //do{
 //    $ret = $c->update( $_REQUEST['text'] );	//发送微博

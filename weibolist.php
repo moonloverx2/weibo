@@ -8,12 +8,13 @@ include_once( 'saetv2.ex.class.php' );
 
 //  do{
 	$c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['token']['access_token'] );
-	$ms = $c->home_timeline(1,100,0,0,0,0 );
+	$ms = $c->home_timeline(1,50,0,0,0,0 );
 	$id = 0;
 	$id = file_get_contents("id.log");
 	echo $id;
 	for($i=0;$i<count($ms['statuses']);$i++)
 	{
+		var_dump($ms);
 		if(!empty($ms['statuses'][$i]['retweeted_status']))
 		{
 			if($ms['statuses'][$i]['retweeted_status']['reposts_count']>50||$ms['statuses'][$i]['retweeted_status']['comments_count']>50);
@@ -24,7 +25,7 @@ include_once( 'saetv2.ex.class.php' );
 				   //file_put_contents("id.log",$ms['statuses'][$i]['retweeted_status']['id']);
 				   //$c->update(str_replace("http","(via ".$ms['statuses'][$i]['retweeted_status']['name'].") http",$ms['statuses'][$i]['retweeted_status']['text']));
 				    //var_dump($ms['statuses'][$i]['retweeted_status']['user']['name']);
-                var_dump($ms['statuses'][$i]['retweeted_status']['text']);
+               // var_dump($ms['statuses'][$i]['retweeted_status']['text']);
 				   //echo str_replace("http","(via ".$ms['statuses'][$i]['retweeted_status']['user']['name'].") http",$ms['statuses'][$i]['retweeted_status']['text']);
 // 				}
 			}
