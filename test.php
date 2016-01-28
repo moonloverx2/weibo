@@ -12,55 +12,61 @@ include_once( 'saetv2.ex.class.php' );
 	$id = 0;
 	$id = file_get_contents("id.log");
 	echo $id;
+	var_dump($ms);
 	for($i=0;$i<count($ms['statuses']);$i++)
 	{
-		//var_dump($ms);
-		if(!empty($ms['statuses'][$i]['retweeted_status']))
-		{
-			if(count($ms['statuses'][$i]['retweeted_status']['pic_urls'])==1)
+// 		if(!empty($ms['statuses'][$i]['retweeted_status']))
+// 		{
+ 			if(!empty($ms['statuses'][$i]['retweeted_status']['original_pic']))
 			{
-				echo $ms['statuses'][$i]['retweeted_status']['original_pic'];
+				echo "==============".$ms['statuses'][$i]['retweeted_status']['original_pic'];
+				continue;
 			}
-			else
+			if(!empty($ms['statuses'][$i]['original_pic']))
 			{
-				echo "原微博图片太多";
+				echo ">>>>>>>>>".$ms['statuses'][$i]['original_pic'];
 			}
-			if($ms['statuses'][$i]['retweeted_status']['reposts_count']>50||$ms['statuses'][$i]['retweeted_status']['comments_count']>50);
-			{
-// 				if($ms['statuses'][$i]['retweeted_status']['id']>$id)
-// 				{
-			       if(strpos($ms['statuses'][$i]['retweeted_status']['text'],"http") > 0){
-                    $c->update(str_replace("http","(via ".$ms['statuses'][$i]['retweeted_status']['user']['name'].") http",$ms['statuses'][$i]['retweeted_status']['text']));
-                   }   
-				   else
-				   {
-					 $c->update($ms['statuses'][$i]['retweeted_status']['text']."(via ".$ms['statuses'][$i]['retweeted_status']['user']['name'].")");
-				   }
-// 				}
-			}
-			continue;
-		}
-		if($ms['statuses'][$i]['comments_count']>50||$ms['statuses'][$i]['reposts_count']>50)
-		{
-		if(count($ms['statuses'][$i]['pic_urls'])==1)
-			{
-				echo $ms['statuses'][$i]['original_pic'];
-			}
-		else
-			{
-				echo "微博图片太多";
-			}
-// 			if($ms['statuses'][$i]['id']>$id)
+		
+// 			else
 // 			{
-             	if(strpos($ms['statuses'][$i]['text'],"http") > 0){
-                  $c->update(str_replace("http","(via ".$ms['statuses'][$i]['user']['name'].") http",$ms['statuses'][$i]['text']));
-                 }   
-				 else
-				 {
-					$c->update($ms['statuses'][$i]['text']."(via ".$ms['statuses'][$i]['user']['name'].")");
-				 }
+// 				echo "原微博图片太多";
 // 			}
-		}
+// 			if($ms['statuses'][$i]['retweeted_status']['reposts_count']>50||$ms['statuses'][$i]['retweeted_status']['comments_count']>50);
+// 			{
+// // 				if($ms['statuses'][$i]['retweeted_status']['id']>$id)
+// // 				{
+// 			       if(strpos($ms['statuses'][$i]['retweeted_status']['text'],"http") > 0){
+//                     $c->update(str_replace("http","(via ".$ms['statuses'][$i]['retweeted_status']['user']['name'].") http",$ms['statuses'][$i]['retweeted_status']['text']));
+//                    }   
+// 				   else
+// 				   {
+// 					 $c->update($ms['statuses'][$i]['retweeted_status']['text']."(via ".$ms['statuses'][$i]['retweeted_status']['user']['name'].")");
+// 				   }
+// // 				}
+// 			}
+// 			continue;
+// 		}
+// 		if($ms['statuses'][$i]['comments_count']>50||$ms['statuses'][$i]['reposts_count']>50)
+// 		{
+// 		if(count($ms['statuses'][$i]['pic_urls'])==1)
+// 			{
+// 				echo $ms['statuses'][$i]['original_pic'];
+// 			}
+// 		else
+// 			{
+// 				echo "微博图片太多";
+// 			}
+// // 			if($ms['statuses'][$i]['id']>$id)
+// // 			{
+//              	if(strpos($ms['statuses'][$i]['text'],"http") > 0){
+//                   $c->update(str_replace("http","(via ".$ms['statuses'][$i]['user']['name'].") http",$ms['statuses'][$i]['text']));
+//                  }   
+// 				 else
+// 				 {
+// 					$c->update($ms['statuses'][$i]['text']."(via ".$ms['statuses'][$i]['user']['name'].")");
+// 				 }
+// // 			}
+// 		}
 	}
 //      sleep(3600);//等待时间，进行下一次操作。
 //  }while(true);

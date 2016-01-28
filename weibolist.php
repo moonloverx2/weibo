@@ -6,9 +6,9 @@ include_once( 'saetv2.ex.class.php' );
 
 
 
-//  do{
+  do{
 	$c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['token']['access_token'] );
-	$ms = $c->home_timeline(1,50,0,0,0,0 );
+	$ms = $c->home_timeline(1,15,0,0,0,0 );
 	$id = 0;
 	$id = file_get_contents("id.log");
 	echo $id;
@@ -20,13 +20,26 @@ include_once( 'saetv2.ex.class.php' );
 			{
  				if($ms['statuses'][$i]['retweeted_status']['id']>$id)
  				{
-			       if(strpos($ms['statuses'][$i]['retweeted_status']['text'],"http") > 0){
-                    $c->update(str_replace("http","(via ".$ms['statuses'][$i]['retweeted_status']['user']['name'].") http",$ms['statuses'][$i]['retweeted_status']['text']));
-                   }   
-				   else
-				   {
-					 $c->update($ms['statuses'][$i]['retweeted_status']['text']."(via ".$ms['statuses'][$i]['retweeted_status']['user']['name'].")");
-				   }
+ 					if(!empty($ms['statuses'][$i]['retweeted_status']['original_pic']))
+ 					{ 					
+			         if(strpos($ms['statuses'][$i]['retweeted_status']['text'],"http") > 0){
+                    $c->upload(str_replace("http","(via ".$ms['statuses'][$i]['retweeted_status']['user']['name'].") http",$ms['statuses'][$i]['retweeted_status']['text']),$ms['statuses'][$i]['retweeted_status']['original_pic'],null,null);
+                       }   
+				       else
+				      {
+					     $c->upload($ms['statuses'][$i]['retweeted_status']['text']."(via ".$ms['statuses'][$i]['retweeted_status']['user']['name'].")",$ms['statuses'][$i]['retweeted_status']['original_pic'],null,null);
+				       }
+ 					}
+ 					else 
+ 					{
+ 						if(strpos($ms['statuses'][$i]['retweeted_status']['text'],"http") > 0){
+ 							$c->update(str_replace("http","(via ".$ms['statuses'][$i]['retweeted_status']['user']['name'].") http",$ms['statuses'][$i]['retweeted_status']['text']));
+ 						}
+ 						else
+ 						{
+ 							$c->update($ms['statuses'][$i]['retweeted_status']['text']."(via ".$ms['statuses'][$i]['retweeted_status']['user']['name'].")");
+ 						}
+ 					}
  				}
 			}
 			continue;
@@ -35,18 +48,31 @@ include_once( 'saetv2.ex.class.php' );
 		{
  			if($ms['statuses'][$i]['id']>$id)
  			{
+ 				if(!empty($ms['statuses'][$i]['original_pic']))
+ 				{
              	if(strpos($ms['statuses'][$i]['text'],"http") > 0){
-                  $c->update(str_replace("http","(via ".$ms['statuses'][$i]['user']['name'].") http",$ms['statuses'][$i]['text']));
-                 }   
-				 else
-				 {
-					$c->update($ms['statuses'][$i]['text']."(via ".$ms['statuses'][$i]['user']['name'].")");
-				 }
+                  $c->upload(str_replace("http","(via ".$ms['statuses'][$i]['user']['name'].") http",$ms['statuses'][$i]['text']),$ms['statuses'][$i]['original_pic'],null,null);
+                       }   
+				       else
+				      {
+					     $c->upload($ms['statuses'][$i]['text']."(via ".$ms['statuses'][$i]['user']['name'].")",$ms['statuses'][$i]['original_pic'],null,null);
+				   }
+ 				}
+ 				else
+ 				{
+ 					if(strpos($ms['statuses'][$i]['text'],"http") > 0){
+ 						$c->update(str_replace("http","(via ".$ms['statuses'][$i]['user']['name'].") http",$ms['statuses'][$i]['text']));
+ 					}
+ 					else
+ 					{
+ 						$c->update($ms['statuses'][$i]['text']."(via ".$ms['statuses'][$i]['user']['name'].")");
+ 					}
+ 				}
  			}
 		}
 	}
-//      sleep(3600);//等待时间，进行下一次操作。
-//  }while(true);
+      sleep(3600);//等待时间，进行下一次操作。
+  }while(true);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
