@@ -8,7 +8,7 @@ include_once( 'saetv2.ex.class.php' );
 
   do{
 	$c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['token']['access_token'] );
-	$ms = $c->home_timeline(1,15,0,0,0,0 );
+	$ms = $c->home_timeline(1,50,0,0,0,0 );
 	$id = 0;
 	$id = file_get_contents("id.log");
 	echo $id;
@@ -16,7 +16,7 @@ include_once( 'saetv2.ex.class.php' );
 	{
 		if(!empty($ms['statuses'][$i]['retweeted_status']))
 		{
-			if($ms['statuses'][$i]['retweeted_status']['reposts_count']>50||$ms['statuses'][$i]['retweeted_status']['comments_count']>50);
+			if($ms['statuses'][$i]['retweeted_status']['reposts_count']>80||$ms['statuses'][$i]['retweeted_status']['comments_count']>80);
 			{
  				if($ms['statuses'][$i]['retweeted_status']['id']>$id)
  				{
@@ -44,7 +44,7 @@ include_once( 'saetv2.ex.class.php' );
 			}
 			continue;
 		}
-		if($ms['statuses'][$i]['comments_count']>50||$ms['statuses'][$i]['reposts_count']>50)
+		if($ms['statuses'][$i]['comments_count']>80||$ms['statuses'][$i]['reposts_count']>80)
 		{
  			if($ms['statuses'][$i]['id']>$id)
  			{
@@ -70,6 +70,7 @@ include_once( 'saetv2.ex.class.php' );
  				}
  			}
 		}
+		sleep(60);
 	}
       sleep(3600);//等待时间，进行下一次操作。
   }while(true);
