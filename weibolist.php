@@ -5,7 +5,7 @@ include_once( 'config.php' );
 include_once( 'saetv2.ex.class.php' );
 
 
-
+ignore_user_abort(true);
   do{
 	$c = new SaeTClientV2( WB_AKEY , WB_SKEY , $_SESSION['token']['access_token'] );
 	$ms = $c->home_timeline(1,50,0,0,0,0 );
